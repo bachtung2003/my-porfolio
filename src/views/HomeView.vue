@@ -28,7 +28,11 @@ const isSecondContentVisible = ref(false);
 const isThirdContentVisible = ref(false);
 const scrollY = ref(0); // Tracks vertical scroll position
 const isFooterVisible = ref(false); // Tracks if the footer is in view
+const isMax2xl = ref(false);
 
+const updateScreenSize = () => {
+  isMax2xl.value = window.innerWidth <= 1536; // 1536px is the max width for 2xl in Tailwind
+};
 // Compute the scaleY value based on scrollY
 const scaleY = computed(() => {
   const maxScroll = 500; // Maximum scroll height for scaling effect
@@ -155,6 +159,9 @@ const updateSkillFixedState = () => {
 };
 
 onMounted(() => {
+  updateScreenSize(); // Check initial screen size
+  window.addEventListener("resize", updateScreenSize); // Update on resize
+
   // Add scroll listener for skill section visibility
   window.addEventListener("scroll", updateSkillFixedState);
   updateSkillFixedState(); // Initial state check
@@ -216,7 +223,7 @@ onMounted(() => {
     <!-- Main Content -->
     <div v-else>
       <div
-        class="w-full fixed left-0 top-[-10px] bg-black will-change-transform"
+        class="w-full fixed left-0 top-[-10px] bg-black will-change-transform max-md:hidden"
         :style="{
           transformOrigin: '50% 0%',
           height: '50vh',
@@ -228,19 +235,21 @@ onMounted(() => {
         <!-- Fade-out Content -->
         <div class="fixed p-5 flex flex-col justify-between h-full w-full">
           <div
-            class="flex flex-1 justify-between"
+            class="flex flex-1 lg:justify-between flex-col items-center lg:flex-row lg:items-start"
             :style="{ opacity: contentOpacity }"
           >
-            <div class="animate-slide-in-delay-left">
-              <span class="font-extrabold text-8xl">SOFTWARE</span>
+            <div class="max-sm:flex max-sm:gap-1 animate-slide-in-delay-left">
+              <span class="font-extrabold sm:text-8xl">SOFTWARE</span>
               <br />
-              <span class="font-extrabold text-8xl">DEVELOPER</span>
+              <span class="font-extrabold sm:text-8xl">DEVELOPER</span>
               <br />
-              <span class="flex justify-end font-light text-4xl">
+              <span
+                class="flex justify-end font-light sm:text-4xl max-lg:pl-14"
+              >
                 - FRONT END SPECIALIST
               </span>
             </div>
-            <div class="animate-slide-down">
+            <div class="max-sm:pt-20 animate-slide-down">
               <div
                 class="h-full max-h-[35rem] w-[25rem] bg-no-repeat bg-cover relative"
                 style="background-position: 50%"
@@ -264,16 +273,20 @@ onMounted(() => {
                 muted
                 class="w-10 h-auto"
               ></video>
-              <span class="font-light text-2xl animate-slide-down">SCROLL</span>
+              <span class="font-light sm:text-2xl animate-slide-down"
+                >SCROLL</span
+              >
             </div>
             <div class="flex flex-col animate-slide-in-delay-right">
               <span
                 v-if="isThirdContentVisible"
-                class="font-light text-4xl animate-slide-down"
+                class="font-light sm:text-4xl animate-slide-down"
               >
                 - WEB DESIGNING CAPABLE
               </span>
-              <span class="font-extrabold text-8xl">TRAN BACH TUNG</span>
+              <span class="font-extrabold max-lg:text-4xl text-8xl"
+                >TRAN BACH TUNG</span
+              >
             </div>
           </div>
         </div>
@@ -284,7 +297,9 @@ onMounted(() => {
           <div class="pb-48 relative">
             <div class="px-8 mb-16" id="about">
               <div class="pt-80 w-[70rem] m-auto pb-40 relative">
-                <p class="text-white text-9xl font-semibold">
+                <p
+                  class="text-white max-xl:w-min max-lg:text-4xl max-lg:leading-loose max-xl:text-6xl max-xl:leading-normal max-2xl:text-7xl text-9xl font-semibold"
+                >
                   <span
                     >Over the years I have spent time converting designs</span
                   >
@@ -345,9 +360,9 @@ onMounted(() => {
                     id="skill-image"
                     style="width: 29vw"
                     :style="{ transform: `translateY(${translateYValue}%)` }"
-                    class="absolute h-[69vh] max-w-[68rem] max-h-[90rem] top-1/2 bg-cover bg-no-repeat bg-[url('../assets/thumb-pic-2.jpg')] bg-center"
+                    class="max-sm:hidden absolute h-[69vh] max-w-[68rem] max-h-[90rem] top-1/2 bg-cover bg-no-repeat bg-[url('../assets/thumb-pic-2.jpg')] bg-center"
                   ></div>
-                  <div class="max-w-fit ml-16">
+                  <div class="max-w-fit ml-16 max-sm:ml-[-15rem]">
                     <p class="text-white text-9xl font-semibold mb-28">
                       <span
                         id="skill-span"
@@ -359,8 +374,10 @@ onMounted(() => {
                         ><p>Skills</p></span
                       >
                     </p>
-                    <div class="grid grid-cols-3 gap-16 ml-64">
-                      <div></div>
+                    <div
+                      class="grid grid-cols-3 gap-16 ml-64 max-2xl:justify-items-end max-lg:flex max-sm:flex-col"
+                    >
+                      <div class="max-2xl:hidden"></div>
                       <div>
                         <section class="mb-16">
                           <h3 class="text-white text-2xl font-semibold mb-9">
@@ -425,7 +442,7 @@ onMounted(() => {
                 </div>
               </div>
               <div
-                class="slider mt-[16rem]"
+                class="slider mt-[16rem] max-sm:mt-[40rem]"
                 style="--width: 140px; --height: 80px; --quantity: 11"
               >
                 <div class="list bg-white">
@@ -466,7 +483,9 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="text-white items-center flex flex-col justify-center">
+            <div
+              class="text-white items-center flex flex-col justify-center max-sm:mt-20 max-lg:mt-10"
+            >
               <img
                 :src="rotateImg"
                 alt=""
@@ -475,7 +494,7 @@ onMounted(() => {
                 class="autoRotate"
               />
               <p
-                class="text-white text-9xl font-semibold mt-28 project"
+                class="text-white text-9xl font-semibold mt-28 project max-md:text-6xl"
                 id="project"
               >
                 PROJECTS
@@ -483,7 +502,7 @@ onMounted(() => {
               <p class="mt-7 font-light italic">
                 - A list of projects I have been working on or built -
               </p>
-              <div class="mt-7 grid grid-cols-2 gap-8">
+              <div class="mt-7 grid grid-cols-2 gap-8 max-md:grid-cols-1">
                 <div class="md p-4" style="max-width: 544px">
                   <div
                     class="h-full transform overflow-hidden rounded-md border-2 border-solid border-gray-200 bg-transparent bg-opacity-20 transition duration-500 hover:scale-105 hover:rounded-md hover:border-primary-500 hover:bg-gray-600 dark:border-gray-700 dark:hover:border-primary-500 dark:hover:bg-gray-800"
@@ -917,15 +936,19 @@ onMounted(() => {
       <div id="footer">
         <footer class="relative">
           <div
-            class="block w-full pt-[10vh]"
-            :style="{ backgroundColor: scaleY2 === 1 ? '#000' : '#fff' }"
+            class="block w-full pt-[10vh] max-2xl:bg-white"
+            :style="
+              isMax2xl
+                ? null
+                : { backgroundColor: scaleY2 === 1 ? '#000' : '#fff' }
+            "
           >
-            <div class="flex flex-row px-24 pb-24">
+            <div class="flex flex-row px-24 pb-24 max-md:flex-col">
               <div class="mr-32 flex-1 flex flex-col justify-between">
                 <div></div>
                 <div class="uppercase">
                   <div class="mb-14">
-                    <h3>QUICK LINKS</h3>
+                    <h3 class="w-max">QUICK LINKS</h3>
                     <ul class="flex items-center">
                       <li class="mr-4">
                         <a href="" class="underline cursor-pointer text-black">
@@ -972,7 +995,7 @@ onMounted(() => {
               </div>
               <div class="flex-1">
                 <section>
-                  <h4 class="text-6xl font-bold">
+                  <h4 class="text-6xl max-lg:text-4xl font-bold">
                     Would love to hear <br />
                     from you ↓.
                   </h4>
@@ -982,18 +1005,19 @@ onMounted(() => {
                   </p>
                 </section>
                 <a
+                  class="text-5xl max-lg:text-3xl max-sm:text-base"
                   target="_blank"
                   data-link="email"
-                  style="text-transform: lowercase; font-size: 3rem"
+                  style="text-transform: lowercase"
                   href="mailto: tranbachtungnvc@gmail.com"
                   ><span class="underline">tranbachtungnvc@gmail.com</span></a
                 >
               </div>
             </div>
             <div
-              class="mx-24 flex flex-row p-0 border-t items-center py-4 justify-between"
+              class="mx-24 flex flex-row p-0 border-t items-center py-4 justify-between max-sm:flex-col max-sm:gap-4"
             >
-              <ul class="flex flex-row gap-4">
+              <ul class="flex flex-row gap-4 max-sm:flex-col">
                 <li>
                   <a
                     target="_blank"
@@ -1031,7 +1055,7 @@ onMounted(() => {
             </div>
           </div>
           <div
-            class="w-full fixed left-0 bottom-0 bg-black will-change-transform"
+            class="max-lg:hidden w-full fixed left-0 bottom-0 bg-black will-change-transform"
             :style="{
               transformOrigin: 'bottom',
               height: '50vh',

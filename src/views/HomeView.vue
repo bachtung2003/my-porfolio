@@ -973,7 +973,7 @@ onMounted(() => {
                     <h3>EXTRAS</h3>
                     <ul class="flex items-center">
                       <li class="mr-4">
-                        <a href="" class="underline cursor-pointer text-black">
+                        <a href="https://drive.google.com/file/d/1JF7t-I1rf80goyHMcjbaKIG3ruTIqzDJ/view?usp=sharing" class="underline cursor-pointer text-black">
                           <span>Resume</span></a
                         >
                       </li>

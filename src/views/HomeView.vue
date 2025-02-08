@@ -386,7 +386,6 @@ onMounted(() => {
                           <ul class="text-white">
                             <li>HTML</li>
                             <li>CSS</li>
-                            <li>SASS/SCSS</li>
                             <li>Typescript</li>
                           </ul>
                         </section>
